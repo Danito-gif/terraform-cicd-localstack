@@ -18,7 +18,7 @@ provider "aws" {
   skip_requesting_account_id  = true
 
   endpoints {
-    ssm = "http://localstack:4566"
+    ssm = "http://localhost:4566"
   }
 }
 

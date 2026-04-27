@@ -19,11 +19,18 @@ jobs:
       - name: Iniciar LocalStack
         run: |
           docker run -d --name localstack \
-          -p 4566:4566 \
-          localstack/localstack
+            -e SERVICES=ssm \
+            -p 4566:4566 \
+            localstack/localstack
 
       - name: Esperar LocalStack
-        run: sleep 60
+        run: |
+          for i in {1..30}; do
+            curl -s http://localhost:4566/_localstack/health && exit 0
+            echo "Esperando LocalStack..."
+            sleep 3
+          done
+          exit 1
 
       - name: Terraform Init
         run: terraform init
