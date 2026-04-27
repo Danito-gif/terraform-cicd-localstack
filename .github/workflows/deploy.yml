@@ -20,16 +20,27 @@ jobs:
         run: |
           docker run -d --name localstack \
             -e SERVICES=ssm \
+            -e GATEWAY_LISTEN=0.0.0.0:4566 \
             -p 4566:4566 \
-            localstack/localstack
+            localstack/localstack:3.0
+
+      - name: Ver logs de LocalStack
+        run: |
+          sleep 10
+          docker ps
+          docker logs localstack
 
       - name: Esperar LocalStack
         run: |
-          for i in {1..30}; do
-            curl -s http://localhost:4566/_localstack/health && exit 0
+          for i in {1..40}; do
+            if curl -f http://localhost:4566/_localstack/health; then
+              echo "LocalStack está listo"
+              exit 0
+            fi
             echo "Esperando LocalStack..."
             sleep 3
           done
+          docker logs localstack
           exit 1
 
       - name: Terraform Init
