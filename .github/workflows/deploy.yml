@@ -23,7 +23,7 @@ jobs:
           localstack/localstack
 
       - name: Esperar LocalStack
-        run: sleep 20
+        run: sleep 60
 
       - name: Terraform Init
         run: terraform init
