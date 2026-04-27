@@ -25,5 +25,5 @@ provider "aws" {
 resource "aws_ssm_parameter" "parametro_ci" {
   name  = "/danito/practica"
   type  = "String"
-  value = "terraform-cicd-ok"
+  value = "terraform-cicd-v1.1"
 }
