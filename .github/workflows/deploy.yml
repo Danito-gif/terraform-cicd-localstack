@@ -9,12 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    services:
-      localstack:
-        image: localstack/localstack
-        ports:
-          - 4566:4566
-
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v4
@@ -22,8 +16,14 @@ jobs:
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Iniciar LocalStack
+        run: |
+          docker run -d --name localstack \
+          -p 4566:4566 \
+          localstack/localstack
+
       - name: Esperar LocalStack
-        run: sleep 10
+        run: sleep 20
 
       - name: Terraform Init
         run: terraform init
