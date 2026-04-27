@@ -19,8 +19,8 @@ provider "aws" {
   skip_requesting_account_id  = true
 
   endpoints {
-    s3  = "http://host.docker.internal:4566"
-    sts = "http://host.docker.internal:4566"
+    s3  = "http://localstack:4566"
+    sts = "http://localstack:4566"
   }
 }
 
